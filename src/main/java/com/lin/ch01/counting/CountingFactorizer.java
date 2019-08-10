@@ -1,4 +1,4 @@
-package com.lin.ch01;
+package com.lin.ch01.counting;
 
 import com.lin.annotion.ThreadSafe;
 import com.lin.ch01.servlet.Servlet;

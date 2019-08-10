@@ -1,5 +1,6 @@
-package com.lin.ch01;
+package com.lin.ch01.stateless;
 
+import com.lin.ch01.stateless.StatelessFactorizer;
 import com.lin.ch01.servlet.ServletRequest;
 import com.lin.ch01.servlet.ServletResponse;
 import org.junit.Test;
@@ -9,13 +10,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 在没有足够原子性保证的情况下对其最近计算结果进行缓存的Servlet测试（不要这样做）
+ * 无状态的Servlet测试（无状态的对象是线程安全的）
  * @author lkmc2
- * @date 2019/8/10 16:51
+ * @date 2019/8/10 16:44
  */
-public class UnsafeCachingFactorizerTest {
+public class StatelessFactorizerTest {
 
-    private UnsafeCachingFactorizer servlet = new UnsafeCachingFactorizer();
+    private StatelessFactorizer servlet = new StatelessFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {

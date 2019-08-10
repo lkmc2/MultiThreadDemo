@@ -1,4 +1,4 @@
-package com.lin.ch01;
+package com.lin.ch01.caching;
 
 import com.lin.annotion.ThreadSafe;
 import com.lin.ch01.servlet.Servlet;
@@ -7,17 +7,27 @@ import com.lin.ch01.servlet.ServletResponse;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 无状态的Servlet（无状态的对象是线程安全的）
+ * 使用 AtomicLong 类型变量来统计已处理请求数量的Servlet（线程安全）
  * @author lkmc2
  * @date 2019/8/10 16:37
  */
 @ThreadSafe
-public class StatelessFactorizer implements Servlet {
+public class SynchronizedCachingFactorizer implements Servlet {
+
+    private final AtomicLong count = new AtomicLong(0);
+
+    public long getCount() {
+        return count.get();
+    }
+
     public void service(ServletRequest request, ServletResponse response) {
         BigInteger i = extractFromRequest(request);
         BigInteger[] factors = factor(i);
+        // 原子自增（线程安全）
+        count.incrementAndGet();
         encodeIntoResponse(response, factors);
     }
 
