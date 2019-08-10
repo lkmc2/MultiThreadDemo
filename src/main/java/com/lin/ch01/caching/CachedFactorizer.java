@@ -37,7 +37,7 @@ public class CachedFactorizer implements Servlet {
         return (double) cacheHits / (double) hits;
     }
 
-    public synchronized void service(ServletRequest request, ServletResponse response) {
+    public  void service(ServletRequest request, ServletResponse response) {
         BigInteger i = extractFromRequest(request);
         BigInteger[] factors = null;
 
