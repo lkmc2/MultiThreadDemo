@@ -1,6 +1,6 @@
 package com.lin.ch01;
 
-import com.lin.NotThreadSafe;
+import com.lin.annotion.NotThreadSafe;
 
 /**
  * 非线程安全的序列生成器

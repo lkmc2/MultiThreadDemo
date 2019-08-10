@@ -1,4 +1,4 @@
-package com.lin;
+package com.lin.annotion;
 
 /**
  * 非线程安全注解
