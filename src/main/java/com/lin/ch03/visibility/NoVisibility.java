@@ -1,4 +1,4 @@
-package com.lin.ch03;
+package com.lin.ch03.visibility;
 
 /**
  * 表示变量对线程不可见的例子
@@ -23,6 +23,9 @@ public class NoVisibility {
 
     public static void main(String[] args) {
         // 该线程可以无限执行下去，也可能输出0，因为读线程可能用于都看不到ready的值
+        new ReaderThread().start();
+        new ReaderThread().start();
+        new ReaderThread().start();
         new ReaderThread().start();
         number = 42;
         ready = true;
