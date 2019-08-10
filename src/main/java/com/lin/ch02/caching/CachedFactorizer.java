@@ -1,10 +1,10 @@
-package com.lin.ch01.caching;
+package com.lin.ch02.caching;
 
 import com.lin.annotion.GuardBy;
 import com.lin.annotion.ThreadSafe;
-import com.lin.ch01.servlet.Servlet;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.ch02.servlet.Servlet;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 
 import java.math.BigInteger;
 import java.util.Arrays;

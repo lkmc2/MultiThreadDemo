@@ -1,4 +1,4 @@
-package com.lin.ch01.servlet;
+package com.lin.ch02.servlet;
 
 /**
  * Servlet响应

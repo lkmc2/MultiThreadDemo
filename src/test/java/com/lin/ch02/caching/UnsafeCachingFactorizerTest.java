@@ -1,6 +1,7 @@
-package com.lin.ch00;
+package com.lin.ch02.caching;
 
-import org.junit.Before;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -8,27 +9,22 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 线程安全的序列生成器测试
+ * 在没有足够原子性保证的情况下对其最近计算结果进行缓存的Servlet测试（不要这样做）
  * @author lkmc2
- * @date 2019/8/10 16:18
+ * @date 2019/8/10 16:51
  */
-public class SequenceTest {
+public class UnsafeCachingFactorizerTest {
 
-    private SafeSequence sequence;
-
-    @Before
-    public void before() {
-        sequence = new SafeSequence();
-    }
+    private UnsafeCachingFactorizer servlet = new UnsafeCachingFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {
-            System.out.println(sequence.getNext());
+            servlet.service(new ServletRequest(), new ServletResponse());
         }
     };
 
     @Test
-    public void getNext() throws InterruptedException {
+    public void service() throws InterruptedException {
         ThreadPoolExecutor pool = new ThreadPoolExecutor(5, 10, 1, TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(100));
 
         for (int i = 0; i < 50; i++) {
@@ -38,5 +34,4 @@ public class SequenceTest {
         // 等待线程池执行完成
         pool.awaitTermination(3, TimeUnit.SECONDS);
     }
-
 }

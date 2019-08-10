@@ -1,10 +1,9 @@
-package com.lin.ch01.counting;
+package com.lin.ch02.counting;
 
 import com.lin.annotion.NotThreadSafe;
-import com.lin.annotion.ThreadSafe;
-import com.lin.ch01.servlet.Servlet;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.ch02.servlet.Servlet;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 
 import java.math.BigInteger;
 import java.util.Arrays;

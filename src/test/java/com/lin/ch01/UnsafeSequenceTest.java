@@ -1,8 +1,6 @@
-package com.lin.ch01.counting;
+package com.lin.ch01;
 
-import com.lin.ch01.counting.UnsafeCountingFactorizer;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,22 +8,27 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 在没有同步的情况下统计已处理请求数量的Servlet测试（不要这样做）
+ * 非线程安全的序列生成器测试
  * @author lkmc2
- * @date 2019/8/10 16:51
+ * @date 2019/8/10 16:18
  */
-public class UnsafeCountingFactorizerTest {
+public class UnsafeSequenceTest {
 
-    private UnsafeCountingFactorizer servlet = new UnsafeCountingFactorizer();
+    private UnsafeSequence sequence;
+
+    @Before
+    public void before() {
+        sequence = new UnsafeSequence();
+    }
 
     private Runnable task = new Runnable() {
         public void run() {
-            servlet.service(new ServletRequest(), new ServletResponse());
+            System.out.println(sequence.getNext());
         }
     };
 
     @Test
-    public void service() throws InterruptedException {
+    public void getNext() throws InterruptedException {
         ThreadPoolExecutor pool = new ThreadPoolExecutor(5, 10, 1, TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(100));
 
         for (int i = 0; i < 50; i++) {
@@ -35,4 +38,5 @@ public class UnsafeCountingFactorizerTest {
         // 等待线程池执行完成
         pool.awaitTermination(3, TimeUnit.SECONDS);
     }
+
 }

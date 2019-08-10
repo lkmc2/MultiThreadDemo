@@ -1,4 +1,4 @@
-package com.lin.ch00;
+package com.lin.ch01;
 
 import com.lin.annotion.NotThreadSafe;
 

@@ -1,4 +1,4 @@
-package com.lin.ch00;
+package com.lin.ch01;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,17 +8,17 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 非线程安全的序列生成器测试
+ * 线程安全的序列生成器测试
  * @author lkmc2
  * @date 2019/8/10 16:18
  */
-public class UnsafeSequenceTest {
+public class SequenceTest {
 
-    private UnsafeSequence sequence;
+    private SafeSequence sequence;
 
     @Before
     public void before() {
-        sequence = new UnsafeSequence();
+        sequence = new SafeSequence();
     }
 
     private Runnable task = new Runnable() {

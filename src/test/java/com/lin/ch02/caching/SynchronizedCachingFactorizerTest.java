@@ -1,8 +1,7 @@
-package com.lin.ch01.counting;
+package com.lin.ch02.caching;
 
-import com.lin.ch01.counting.CountingFactorizer;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,13 +9,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 使用 AtomicLong 类型变量来统计已处理请求数量的Servlet测试（线程安全）
+ * 使用 synchronized 方法来缓存最新的计算结果，但并发性非常糟糕的Servlet测试（线程安全，但不要这么做）
  * @author lkmc2
- * @date 2019/8/10 16:51
+ * @date 2019/8/10 17:15
  */
-public class CountingFactorizerTest {
+public class SynchronizedCachingFactorizerTest {
 
-    private CountingFactorizer servlet = new CountingFactorizer();
+    private SynchronizedCachingFactorizer servlet = new SynchronizedCachingFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {

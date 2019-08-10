@@ -1,23 +1,21 @@
-package com.lin.ch01.caching;
+package com.lin.ch02.counting;
 
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
-
 /**
- * 使用 synchronized 方法来缓存最新的计算结果，但并发性非常糟糕的Servlet测试（线程安全，但不要这么做）
+ * 使用 AtomicLong 类型变量来统计已处理请求数量的Servlet测试（线程安全）
  * @author lkmc2
- * @date 2019/8/10 17:15
+ * @date 2019/8/10 16:51
  */
-public class SynchronizedCachingFactorizerTest {
+public class CountingFactorizerTest {
 
-    private SynchronizedCachingFactorizer servlet = new SynchronizedCachingFactorizer();
+    private CountingFactorizer servlet = new CountingFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {

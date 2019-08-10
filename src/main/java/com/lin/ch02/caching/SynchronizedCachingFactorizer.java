@@ -1,41 +1,41 @@
-package com.lin.ch01.caching;
+package com.lin.ch02.caching;
 
-import com.lin.annotion.NotThreadSafe;
-import com.lin.ch01.servlet.Servlet;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.annotion.GuardBy;
+import com.lin.annotion.ThreadSafe;
+import com.lin.ch02.servlet.Servlet;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 在没有足够原子性保证的情况下对其最近计算结果进行缓存的Servlet（不要这样做）
+ * 使用 synchronized 方法来缓存最新的计算结果，但并发性非常糟糕的Servlet（线程安全，但不要这么做）
  * @author lkmc2
  * @date 2019/8/10 16:37
  */
-@NotThreadSafe
-public class UnsafeCachingFactorizer implements Servlet {
+@ThreadSafe
+public class SynchronizedCachingFactorizer implements Servlet {
 
-    /** 上次的请求数值 **/
-    private final AtomicReference<BigInteger> lastNumber = new AtomicReference<BigInteger>();
+    @GuardBy("this")
+    private BigInteger lastNumber;
 
-    /** 上次请求数值计算出的因数分解结果 **/
-    private final AtomicReference<BigInteger[]> lastFactors = new AtomicReference<BigInteger[]>();
+    @GuardBy("this")
+    private BigInteger[] lastFactors;
 
-    public void service(ServletRequest request, ServletResponse response) {
+    public synchronized void service(ServletRequest request, ServletResponse response) {
         BigInteger i = extractFromRequest(request);
 
-        if (i.equals(lastNumber.get())) {
+        if (i.equals(lastNumber)) {
             // 数值与上次请求一致，从缓存获取结果
-            encodeIntoResponse(response, lastFactors.get());
+            encodeIntoResponse(response, lastFactors);
         } else {
             // 实时计算结果，并存入缓存
             BigInteger[] factors = factor(i);
 
-            // 因为无法同时更新lastNumber和lastFactors两个变量，可能被其他线程更改，所以是非线程安全的
-            lastNumber.set(i);
-            lastFactors.set(factors);
+            // 因为使用了同步方法，以下两个变量可以同时更新，线程安全，但性能可能不是很好
+            lastNumber = i;
+            lastFactors = factors;
             encodeIntoResponse(response, factors);
         }
     }

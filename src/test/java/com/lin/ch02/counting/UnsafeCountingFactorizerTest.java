@@ -1,8 +1,7 @@
-package com.lin.ch01.caching;
+package com.lin.ch02.counting;
 
-import com.lin.ch01.caching.UnsafeCachingFactorizer;
-import com.lin.ch01.servlet.ServletRequest;
-import com.lin.ch01.servlet.ServletResponse;
+import com.lin.ch02.servlet.ServletRequest;
+import com.lin.ch02.servlet.ServletResponse;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,13 +9,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 在没有足够原子性保证的情况下对其最近计算结果进行缓存的Servlet测试（不要这样做）
+ * 在没有同步的情况下统计已处理请求数量的Servlet测试（不要这样做）
  * @author lkmc2
  * @date 2019/8/10 16:51
  */
-public class UnsafeCachingFactorizerTest {
+public class UnsafeCountingFactorizerTest {
 
-    private UnsafeCachingFactorizer servlet = new UnsafeCachingFactorizer();
+    private UnsafeCountingFactorizer servlet = new UnsafeCountingFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {
