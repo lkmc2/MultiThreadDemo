@@ -1,4 +1,4 @@
-package com.lin.ch01;
+package com.lin.ch00;
 
 import org.junit.Before;
 import org.junit.Test;

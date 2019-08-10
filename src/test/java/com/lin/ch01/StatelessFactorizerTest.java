@@ -1,6 +1,7 @@
 package com.lin.ch01;
 
-import org.junit.Before;
+import com.lin.ch01.servlet.ServletRequest;
+import com.lin.ch01.servlet.ServletResponse;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -10,27 +11,22 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 
 /**
- * 非线程安全的序列生成器测试
+ * 无状态的Servlet测试（无状态的对象是线程安全的）
  * @author lkmc2
- * @date 2019/8/10 16:18
+ * @date 2019/8/10 16:44
  */
-public class UnsafeSequenceTest {
+public class StatelessFactorizerTest {
 
-    private UnsafeSequence sequence;
-
-    @Before
-    public void before() {
-        sequence = new UnsafeSequence();
-    }
+    private StatelessFactorizer servlet = new StatelessFactorizer();
 
     private Runnable task = new Runnable() {
         public void run() {
-            System.out.println(sequence.getNext());
+            servlet.service(new ServletRequest(), new ServletResponse());
         }
     };
 
     @Test
-    public void getNext() throws InterruptedException {
+    public void service() throws InterruptedException {
         ThreadPoolExecutor pool = new ThreadPoolExecutor(5, 10, 1, TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(100));
 
         for (int i = 0; i < 50; i++) {
@@ -40,5 +36,4 @@ public class UnsafeSequenceTest {
         // 等待线程池执行完成
         pool.awaitTermination(3, TimeUnit.SECONDS);
     }
-
 }
