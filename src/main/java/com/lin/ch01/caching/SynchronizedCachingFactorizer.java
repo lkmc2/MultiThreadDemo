@@ -1,5 +1,6 @@
 package com.lin.ch01.caching;
 
+import com.lin.annotion.GuardBy;
 import com.lin.annotion.ThreadSafe;
 import com.lin.ch01.servlet.Servlet;
 import com.lin.ch01.servlet.ServletRequest;
@@ -10,25 +11,34 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 使用 AtomicLong 类型变量来统计已处理请求数量的Servlet（线程安全）
+ * 使用 synchronized 方法来缓存最新的计算结果，但并发性非常糟糕的Servlet（线程安全，但不要这么做）
  * @author lkmc2
  * @date 2019/8/10 16:37
  */
 @ThreadSafe
 public class SynchronizedCachingFactorizer implements Servlet {
 
-    private final AtomicLong count = new AtomicLong(0);
+    @GuardBy("this")
+    private BigInteger lastNumber;
 
-    public long getCount() {
-        return count.get();
-    }
+    @GuardBy("this")
+    private BigInteger[] lastFactors;
 
-    public void service(ServletRequest request, ServletResponse response) {
+    public synchronized void service(ServletRequest request, ServletResponse response) {
         BigInteger i = extractFromRequest(request);
-        BigInteger[] factors = factor(i);
-        // 原子自增（线程安全）
-        count.incrementAndGet();
-        encodeIntoResponse(response, factors);
+
+        if (i.equals(lastNumber)) {
+            // 数值与上次请求一致，从缓存获取结果
+            encodeIntoResponse(response, lastFactors);
+        } else {
+            // 实时计算结果，并存入缓存
+            BigInteger[] factors = factor(i);
+
+            // 因为使用了同步方法，以下两个变量可以同时更新，线程安全，但性能可能不是很好
+            lastNumber = i;
+            lastFactors = factors;
+            encodeIntoResponse(response, factors);
+        }
     }
 
     /**
