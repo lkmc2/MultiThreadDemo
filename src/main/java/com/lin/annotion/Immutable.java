@@ -7,12 +7,12 @@ import	java.lang.annotation.Target;
 import java.lang.annotation.Documented;
 
 /**
- * 非线程安全注解
+ * 不可变对象注解
  * @author lkmc2
- * @date 2019/8/10 16:16
+ * @date 2019/9/8 13:05
  */
 @Documented
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotThreadSafe {
+public @interface Immutable {
 }

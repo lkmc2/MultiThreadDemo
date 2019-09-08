@@ -1,6 +1,6 @@
 package com.lin.ch01;
 
-import com.lin.annotion.GuardBy;
+import com.lin.annotion.GuardedBy;
 import com.lin.annotion.ThreadSafe;
 
 /**
@@ -11,7 +11,7 @@ import com.lin.annotion.ThreadSafe;
 @ThreadSafe
 public class SafeSequence {
 
-    @GuardBy("this")
+    @GuardedBy("this")
     private int value;
 
     /** 返回一个唯一的数值，使用同步方法保证线程安全 **/

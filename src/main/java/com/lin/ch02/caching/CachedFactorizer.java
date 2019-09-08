@@ -1,6 +1,6 @@
 package com.lin.ch02.caching;
 
-import com.lin.annotion.GuardBy;
+import com.lin.annotion.GuardedBy;
 import com.lin.annotion.ThreadSafe;
 import com.lin.ch02.servlet.Servlet;
 import com.lin.ch02.servlet.ServletRequest;
@@ -17,16 +17,16 @@ import java.util.Arrays;
 @ThreadSafe
 public class CachedFactorizer implements Servlet {
 
-    @GuardBy("this")
+    @GuardedBy("this")
     private BigInteger lastNumber;
 
-    @GuardBy("this")
+    @GuardedBy("this")
     private BigInteger[] lastFactors;
 
-    @GuardBy("this")
+    @GuardedBy("this")
     private long hits;
 
-    @GuardBy("this")
+    @GuardedBy("this")
     private long cacheHits;
 
     public synchronized long getHits() {

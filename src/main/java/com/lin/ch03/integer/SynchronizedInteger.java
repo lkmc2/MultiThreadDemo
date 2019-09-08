@@ -1,6 +1,6 @@
 package com.lin.ch03.integer;
 
-import com.lin.annotion.GuardBy;
+import com.lin.annotion.GuardedBy;
 import com.lin.annotion.ThreadSafe;
 
 /**
@@ -10,7 +10,7 @@ import com.lin.annotion.ThreadSafe;
  */
 @ThreadSafe
 public class SynchronizedInteger {
-    @GuardBy("this")
+    @GuardedBy("this")
     private int value;
 
     public synchronized int getValue() {

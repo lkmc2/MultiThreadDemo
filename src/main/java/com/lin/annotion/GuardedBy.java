@@ -4,15 +4,13 @@ import	java.lang.annotation.Retention;
 import	java.lang.annotation.ElementType;
 import	java.lang.annotation.Target;
 
-import java.lang.annotation.Documented;
-
 /**
- * 非线程安全注解
+ * 守护线程的对象
  * @author lkmc2
  * @date 2019/8/10 16:16
  */
-@Documented
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotThreadSafe {
+public @interface GuardedBy {
+    String value();
 }
