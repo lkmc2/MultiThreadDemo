@@ -22,7 +22,7 @@ public class NoVisibility {
     }
 
     public static void main(String[] args) {
-        // 该线程可以无限执行下去，也可能输出0，因为读线程可能用于都看不到ready的值
+        // 该线程可以无限执行下去，也可能输出0，因为读线程可能永远都看不到ready的值
         new ReaderThread().start();
         new ReaderThread().start();
         new ReaderThread().start();
