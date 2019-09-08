@@ -43,6 +43,7 @@ public class CachedFactorizer implements Servlet {
 
         // 只对可能会被线程同时访问的变量加上同步代码块，效率比同步方法要好
         synchronized (this) {
+            hits++;
             if (i.equals(lastNumber)) {
                 // 数值与上次请求一致，从缓存获取结果
                 ++cacheHits;
